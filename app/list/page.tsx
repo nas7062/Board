@@ -14,12 +14,41 @@ import {
   PAYMENT_METHOD_LABELS,
   PAYMENT_STATUS,
 } from "../util/constant";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Ipayment } from "../util/type";
 import getAllPaymentList from "../_lib/getAllPaymentList";
 import { Badge } from "@/components/ui/badge";
+import { Search } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import clsx from "clsx";
 export default function ListPage() {
   const [payments, setPayments] = useState<Ipayment[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [paymentMethodFilter, setPaymentMethodFilter] = useState<string>("all");
+
+  const filteredTransactions = useMemo(() => {
+    return payments.filter((transaction) => {
+      const name = MERCHANT_NAME_MAP[transaction.mchtCode];
+      const matchesSearch = name
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+
+      const matchesStatus =
+        statusFilter === "all" || transaction.status === statusFilter;
+      const matchesPaymentMethod =
+        paymentMethodFilter === "all" ||
+        transaction.payType === paymentMethodFilter;
+
+      return matchesSearch && matchesStatus && matchesPaymentMethod;
+    });
+  }, [payments, searchTerm, statusFilter, paymentMethodFilter]);
   useEffect(() => {
     const fetchData = async () => {
       const data = await getAllPaymentList();
@@ -35,6 +64,65 @@ export default function ListPage() {
       <div className="flex flex-col gap-2">
         <h2 className="text-2xl">거래 내역</h2>
         <p className="text-gray-500">전체 거래 내역을 조회하고 관리합니다.</p>
+      </div>
+      {/* 필터 영역 */}
+      <div className="flex flex-col gap-4 md:flex-row md:items-end ">
+        <div className="flex-1">
+          <label className="text-sm text-gray-600 mb-2 block">검색</label>
+          <div className="relative w-full ">
+            <Search className="absolute left-1 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <input
+              placeholder="거래ID, 가맹점명, 고객명 검색..."
+              value={searchTerm}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+              }}
+              className="px-6 py-1 w-full border border-gray-200 focus:border-gray-500 rounded-md"
+            />
+          </div>
+        </div>
+
+        <div className="w-full md:w-24 ">
+          <label className="text-sm text-gray-600 mb-2 block">결제수단</label>
+          <Select
+            value={paymentMethodFilter}
+            onValueChange={(value) => {
+              setPaymentMethodFilter(value);
+            }}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="전체" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">전체</SelectItem>
+              <SelectItem value="DEVICE">단말기</SelectItem>
+              <SelectItem value="MOBILE">모바일</SelectItem>
+              <SelectItem value="ONLINE">온라인</SelectItem>
+              <SelectItem value="BILLING">정기결제</SelectItem>
+              <SelectItem value="VACT">가상계좌</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="w-full md:w-24">
+          <label className="text-sm text-gray-600 mb-2 block">상태</label>
+          <Select
+            value={statusFilter}
+            onValueChange={(value) => {
+              setStatusFilter(value);
+            }}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="전체" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">전체</SelectItem>
+              <SelectItem value="SUCCESS">결제 완료</SelectItem>
+              <SelectItem value="PENDING">결제 대기</SelectItem>
+              <SelectItem value="CANCELLED">환불 완료</SelectItem>
+              <SelectItem value="FAILED">결제 실패</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
       <div>
         <h3>총 100건의 거래 내역</h3>
@@ -61,7 +149,7 @@ export default function ListPage() {
                   </TableCell>
                 </TableRow>
               ) : (
-                payments.map((transaction) => (
+                filteredTransactions.map((transaction) => (
                   <TableRow
                     key={transaction.paymentCode}
                     className="hover:bg-gray-50"
@@ -94,23 +182,23 @@ export default function ListPage() {
                     </TableCell>
                     <TableCell className="text-right">
                       <span
-                        className={
-                          transaction.status === "SUCCESS"
-                            ? "text-red-600"
-                            : "text-gray-900"
-                        }
+                        className={clsx(
+                          transaction.status === "SUCCESS" && "text-green-500",
+                          transaction.status === "FAILED" && "text-red-500"
+                        )}
                       >
-                        {transaction.status === "SUCCESS" && ""}
                         {formatCurrency(transaction.amount)}
                       </span>
                     </TableCell>
                     <TableCell>
                       <Badge
-                        className={
-                          transaction.status === "SUCCESS"
-                            ? "bg-green-500 text-white py-1"
-                            : "text-gray-900 py-1"
-                        }
+                        className={clsx(
+                          transaction.status === "SUCCESS" &&
+                            "bg-green-500 text-white",
+                          transaction.status === "FAILED" &&
+                            "bg-red-500  text-white",
+                          "py-1"
+                        )}
                         variant="outline"
                       >
                         {PAYMENT_STATUS[transaction.status]}
