@@ -63,3 +63,37 @@ export const MERCHANT_NAME_MAP: Record<string, string> = {
   "MCHT-TEST-001": "테스트 가맹점 A",
   "MCHT-TEST-002": "테스트 가맹점 B",
 };
+
+export const MERCHANT_STATUS_LABELS = {
+  CAFE: "카페",
+  SHOP: "쇼핑몰",
+  MART: "마트",
+  APP: "어플",
+  TRAVEL: "예약",
+  EDU: "강의",
+  TEST: "테스트",
+};
+
+export const MERCHANT_STATUS_COLORS = {
+  CAFE: "#3b82f6",
+  SHOP: "#10b981",
+  MART: "#8b5cf6",
+  APP: "#f59e0b",
+  TRAVEL: "#c417bb",
+  EDU: "#b6cc3a",
+  TEST: "#8317e9",
+};
+
+export const STATUS_LABLES = {
+  READY: "대기",
+  ACTIVE: "활성",
+  INACTIVE: "중지",
+  CLOSED: "폐기",
+};
+
+export const STATUS_COLORS = {
+  READY: "#f59e0b",
+  ACTIVE: "#c417bb",
+  INACTIVE: "#b6cc3a",
+  CLOSED: "#8317e9",
+};

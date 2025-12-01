@@ -2,7 +2,7 @@ import { BASE_URL } from "../util/constant";
 
 export default async function getMerchantDetail() {
   try {
-    const res = await fetch(`${BASE_URL}/merchants/detail`, {
+    const res = await fetch(`${BASE_URL}/merchants/details`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

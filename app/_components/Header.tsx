@@ -21,7 +21,7 @@ export default function Header() {
             <Link href="/list" className=" text-gray-900">
               거래내역
             </Link>
-            <Link href="/" className=" text-gray-900">
+            <Link href="/merchant" className=" text-gray-900">
               가맹점
             </Link>
             <Link href="/" className=" text-gray-900">
