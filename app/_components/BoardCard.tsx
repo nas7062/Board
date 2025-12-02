@@ -5,10 +5,12 @@ export default function BoardCard({
   title,
   Icon,
   value,
+  descript,
 }: {
   title: string;
   Icon: React.ElementType;
   value: string | number;
+  descript?: string | number;
 }) {
   return (
     <Card>
@@ -20,7 +22,9 @@ export default function BoardCard({
         <div className="text-2xl text-gray-900">{value}</div>
         <div className="flex items-center gap-1 mt-1">
           <TrendingUp className="h-3 w-3 text-green-600" />
-          <p className="text-xs text-green-600">전주 대비 +12.5%</p>
+          <p className="text-sm text-green-600">
+            {descript ? descript : "전주 대비 +12.5%"}
+          </p>
         </div>
       </CardContent>
     </Card>

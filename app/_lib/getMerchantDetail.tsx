@@ -1,28 +1,30 @@
 import { BASE_URL } from "../util/constant";
+import { ImerchantsDetail } from "../util/type";
 
-export default async function getMerchantDetail() {
-  try {
-    const res = await fetch(`${BASE_URL}/merchants/details`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      cache: "no-store",
-    });
+export type merchantDetailResponse = {
+  status: number;
+  message: string;
+  data: ImerchantsDetail[];
+};
 
-    if (!res.ok) {
-      throw new Error(`PaymentList Request failed: ${res.status}`);
-    }
+export default async function getMerchantDetail(): Promise<merchantDetailResponse> {
+  const res = await fetch(`${BASE_URL}/merchants/details`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    cache: "force-cache",
+  });
 
-    const data = await res.json();
-
-    if (data?.status === 200 && data?.message === "success") {
-      return data;
-    } else {
-      throw new Error(`API error: ${data?.message || "PaymentList error"}`);
-    }
-  } catch (error) {
-    console.error("getAllPaymentList Error:", error);
-    return null;
+  if (!res.ok) {
+    throw new Error(`PaymentList Request failed: ${res.status}`);
   }
+
+  const data = await res.json();
+
+  if (data?.status === 200 && data?.message === "success") {
+    return data;
+  }
+
+  throw new Error(`API error: ${data?.message || "PaymentList error"}`);
 }

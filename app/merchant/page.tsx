@@ -1,14 +1,6 @@
 "use client";
 
-import {
-  Calendar,
-  CreditCard,
-  DollarSign,
-  Mail,
-  Percent,
-  Search,
-  Store,
-} from "lucide-react";
+import { ActivitySquare, Calendar, Mail, Search, Store } from "lucide-react";
 import BoardCard from "../_components/BoardCard";
 import {
   Card,
@@ -110,18 +102,19 @@ export default function MerchantPage() {
       <div className="grid gap-4 md:grid-cols-3">
         <BoardCard
           title="전체 가맹점"
-          Icon={DollarSign}
+          Icon={Store}
           value={`${merchants.length}개`}
         />
         <BoardCard
           title="활성 가맹점"
-          Icon={CreditCard}
+          Icon={ActivitySquare}
           value={`${ActiveMerchantData}개`}
         />
         <BoardCard
           title="최대 업종"
-          Icon={Percent}
+          Icon={Store}
           value={mostBizType?.label as string}
+          descript={`전체 ${mostBizType?.count}%`}
         />
       </div>
       <div className="grid grid-cols-3 gap-4 ">
@@ -270,7 +263,7 @@ export default function MerchantPage() {
                       {selectedMerchantData.mchtName}
                     </h3>
                     <p className="text-sm text-gray-600">
-                      {selectedMerchantData.bizType}
+                      {MERCHANT_STATUS_LABELS[selectedMerchantData.bizType]}
                     </p>
                   </div>
                   <Badge

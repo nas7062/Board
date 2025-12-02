@@ -14,9 +14,7 @@ import {
   PAYMENT_METHOD_LABELS,
   PAYMENT_STATUS,
 } from "../util/constant";
-import { useEffect, useMemo, useState } from "react";
-import { Ipayment } from "../util/type";
-import getAllPaymentList from "../_lib/getAllPaymentList";
+import { useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Search } from "lucide-react";
 import {
@@ -27,8 +25,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import clsx from "clsx";
+import { usePaymentList } from "../hook/usePaymentList";
 export default function ListPage() {
-  const [payments, setPayments] = useState<Ipayment[]>([]);
+  const { data, isLoading, isError, error } = usePaymentList();
+
+  const payments = data?.data ?? [];
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [paymentMethodFilter, setPaymentMethodFilter] = useState<string>("all");
@@ -49,16 +50,10 @@ export default function ListPage() {
       return matchesSearch && matchesStatus && matchesPaymentMethod;
     });
   }, [payments, searchTerm, statusFilter, paymentMethodFilter]);
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getAllPaymentList();
-      if (data.status !== 200) {
-        console.log("패치 실패");
-      }
-      setPayments(data.data);
-    };
-    fetchData();
-  }, []);
+
+  if (isLoading) return <div>불러오는 중...</div>;
+  if (isError) return <div>에러: {(error as Error).message}</div>;
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-2 text-center">
@@ -124,8 +119,8 @@ export default function ListPage() {
           </Select>
         </div>
       </div>
-      <div>
-        <h3>총 100건의 거래 내역</h3>
+      <div className="flex flex-col gap-4">
+        <h3 className="text-xl font-semibold">총 100건의 거래 내역</h3>
         <div className="border rounded-lg overflow-hidden">
           <Table>
             <TableHeader>
