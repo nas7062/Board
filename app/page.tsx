@@ -8,7 +8,7 @@ import { Ipayment } from "./util/type";
 import getAllPaymentList from "./_lib/getAllPaymentList";
 import _ from "lodash";
 import { DollarSign, CreditCard, ShoppingCart, Percent } from "lucide-react";
-import { PAYMENT_METHOD_LABELS } from "./util/constant";
+import { formatCurrency, PAYMENT_METHOD_LABELS } from "./util/constant";
 export default function Home() {
   const [payments, setPayments] = useState<Ipayment[]>([]);
   useEffect(() => {
@@ -64,18 +64,24 @@ export default function Home() {
 
   return (
     <div className="space-y-6">
+      <div className="flex flex-col gap-2 text-center">
+        <h2 className="text-3xl font-semibold">대시 보드</h2>
+        <p className="text-gray-500">
+          주간 거래 내역을 시각화하여 편리하게  .
+        </p>
+      </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <BoardCard
           title="일주일간 거래액"
           Icon={DollarSign}
-          value={weekAmount}
+          value={formatCurrency(weekAmount)}
         />
         <BoardCard
           title="총 거래 건수"
           Icon={CreditCard}
-          value={payments.length}
+          value={`${payments.length}건`}
         />
-        <BoardCard title="승인율" Icon={Percent} value={weekSuccess} />
+        <BoardCard title="승인율" Icon={Percent} value={`${weekSuccess}%`} />
         <BoardCard
           title="가장많은 거래 수단"
           Icon={ShoppingCart}

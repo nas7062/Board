@@ -61,8 +61,8 @@ export default function ListPage() {
   }, []);
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex flex-col gap-2">
-        <h2 className="text-2xl">거래 내역</h2>
+      <div className="flex flex-col gap-2 text-center">
+        <h2 className="text-3xl font-semibold">거래 내역</h2>
         <p className="text-gray-500">전체 거래 내역을 조회하고 관리합니다.</p>
       </div>
       {/* 필터 영역 */}

@@ -101,6 +101,12 @@ export default function MerchantPage() {
   }, [merchants]);
   return (
     <div className="space-y-6 flex flex-col">
+      <div className="flex flex-col gap-2 text-center">
+        <h2 className="text-3xl font-semibold">가맹점</h2>
+        <p className="text-gray-500">
+          전체 가맹점을 조회하고 가맹점마다 상세 정보를 제공합니다.
+        </p>
+      </div>
       <div className="grid gap-4 md:grid-cols-3">
         <BoardCard
           title="전체 가맹점"
@@ -115,7 +121,7 @@ export default function MerchantPage() {
         <BoardCard
           title="최대 업종"
           Icon={Percent}
-          value={mostBizType?.label}
+          value={mostBizType?.label as string}
         />
       </div>
       <div className="grid grid-cols-3 gap-4 ">

@@ -1,6 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TrendingUp } from "lucide-react";
-import { formatCurrency } from "../util/constant";
 
 export default function BoardCard({
   title,
@@ -11,15 +10,6 @@ export default function BoardCard({
   Icon: React.ElementType;
   value: string | number;
 }) {
-  if (title === "일주일간 거래액") {
-    value = formatCurrency(Number(value));
-  }
-  if (title === "총 거래 건수") {
-    value = `${value}건`;
-  }
-  if (title === "승인율") {
-    value = `${value}%`;
-  }
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
