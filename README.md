@@ -10,6 +10,13 @@
 - **Node.js 20+**
 - **npm**
 
+
+### 프로젝트 클론
+```bash
+git clone https://github.com/nas7062/Board.git .
+```
+### vsCode 실행
+
 ### 설치 및 실행
 1. **의존성 설치**
 ```bash
