@@ -57,8 +57,10 @@ export default function ListPage() {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-2 text-center">
-        <h2 className="text-3xl font-semibold">거래 내역</h2>
-        <p className="text-gray-500">전체 거래 내역을 조회하고 관리합니다.</p>
+        <h2 className="text-2xl sm:text-3xl font-semibold">거래 내역</h2>
+        <p className="text-sm text-gray-500">
+          전체 거래 내역을 조회하고 관리합니다.
+        </p>
       </div>
       {/* 필터 영역 */}
       <div className="flex flex-col gap-4 md:flex-row md:items-end ">
@@ -76,7 +78,6 @@ export default function ListPage() {
             />
           </div>
         </div>
-
         <div className="w-full md:w-24 ">
           <label className="text-sm text-gray-600 mb-2 block">결제수단</label>
           <Select
@@ -125,12 +126,12 @@ export default function ListPage() {
           <Table>
             <TableHeader>
               <TableRow className="bg-gray-50">
-                <TableHead>거래ID</TableHead>
+                <TableHead className="md:block hidden">거래ID</TableHead>
                 <TableHead>가맹점</TableHead>
-                <TableHead>결제수단</TableHead>
+                <TableHead className="sm:block hidden">결제수단</TableHead>
                 <TableHead className="text-right">금액</TableHead>
                 <TableHead>상태</TableHead>
-                <TableHead>거래일시</TableHead>
+                <TableHead className="sm:block hidden">거래일시</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -147,9 +148,9 @@ export default function ListPage() {
                 filteredTransactions.map((transaction) => (
                   <TableRow
                     key={transaction.paymentCode}
-                    className="hover:bg-gray-50"
+                    className="hover:bg-gray-50  "
                   >
-                    <TableCell className="font-mono text-sm">
+                    <TableCell className="font-mono text-sm md:block hidden">
                       {transaction.paymentCode}
                     </TableCell>
                     <TableCell>
@@ -163,7 +164,7 @@ export default function ListPage() {
                       </div>
                     </TableCell>
 
-                    <TableCell>
+                    <TableCell className="sm:block hidden">
                       <div>
                         <p className="text-gray-900">
                           {PAYMENT_METHOD_LABELS[transaction.payType]}
@@ -199,7 +200,7 @@ export default function ListPage() {
                         {PAYMENT_STATUS[transaction.status]}
                       </Badge>
                     </TableCell>
-                    <TableCell className="text-sm text-gray-600">
+                    <TableCell className="text-sm text-gray-600 sm:block hidden">
                       {transaction.paymentAt.split("T")[0]}
                     </TableCell>
                   </TableRow>

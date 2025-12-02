@@ -94,8 +94,8 @@ export default function MerchantPage() {
   return (
     <div className="space-y-6 flex flex-col">
       <div className="flex flex-col gap-2 text-center">
-        <h2 className="text-3xl font-semibold">가맹점</h2>
-        <p className="text-gray-500">
+        <h2 className="text-2xl sm:text-3xl font-semibold">가맹점</h2>
+        <p className="text-sm text-gray-500">
           전체 가맹점을 조회하고 가맹점마다 상세 정보를 제공합니다.
         </p>
       </div>
@@ -117,7 +117,7 @@ export default function MerchantPage() {
           descript={`전체 ${mostBizType?.count}%`}
         />
       </div>
-      <div className="grid grid-cols-3 gap-4 ">
+      <div className="grid grid-cols-1 lg:grid-cols-3  gap-4 ">
         <Card className="lg:col-span-2">
           <CardHeader>
             <CardTitle>가맹점 목록</CardTitle>
@@ -185,11 +185,13 @@ export default function MerchantPage() {
               <Table>
                 <TableHeader>
                   <TableRow className="bg-gray-50">
-                    <TableHead>가맹점ID</TableHead>
+                    <TableHead className="sm:block hidden">가맹점ID</TableHead>
                     <TableHead>가맹점명</TableHead>
                     <TableHead>업종</TableHead>
                     <TableHead>상태</TableHead>
-                    <TableHead className="text-right">이용날짜</TableHead>
+                    <TableHead className="text-right m:block hidden">
+                      이용날짜
+                    </TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -206,14 +208,14 @@ export default function MerchantPage() {
                     filteredMerchants.map((merchant) => (
                       <TableRow
                         key={merchant.mchtCode}
-                        className={`hover:bg-gray-50 cursor-pointer ${
+                        className={`hover:bg-gray-50 cursor-pointer  ${
                           selectedMerchant === merchant.mchtCode
                             ? "bg-blue-50"
                             : ""
                         }`}
                         onClick={() => setSelectedMerchant(merchant.bizNo)}
                       >
-                        <TableCell className="font-mono text-sm">
+                        <TableCell className="font-mono text-sm sm:block hidden">
                           {merchant.mchtCode}
                         </TableCell>
                         <TableCell className="text-gray-900">
@@ -237,7 +239,7 @@ export default function MerchantPage() {
                             {STATUS_LABLES[merchant.status]}
                           </div>
                         </TableCell>
-                        <TableCell className="text-right text-gray-900">
+                        <TableCell className="text-right text-gray-900 sm:block hidden">
                           {merchant.updatedAt.split("T")[0]}
                         </TableCell>
                       </TableRow>
@@ -248,7 +250,7 @@ export default function MerchantPage() {
             </div>
           </CardContent>
         </Card>
-        <Card className="max-h-1/2">
+        <Card className=" lg:max-h-1/2">
           <CardHeader>
             <CardTitle>가맹점 상세</CardTitle>
             <CardDescription>선택한 가맹점의 상세 정보</CardDescription>

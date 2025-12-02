@@ -60,8 +60,8 @@ export default function Home() {
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-2 text-center">
-        <h2 className="text-3xl font-semibold">대시 보드</h2>
-        <p className="text-gray-500">
+        <h2 className="text-2xl sm:text-3xl font-semibold">대시 보드</h2>
+        <p className="text-sm text-gray-500">
           주간 거래 내역을 시각화하여 편리하게 조회합니다.
         </p>
       </div>

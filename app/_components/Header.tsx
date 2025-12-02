@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 export default function Header() {
   const pathname = usePathname();
 
-  const linkBaseClass = "text-lg";
+  const linkBaseClass = "text-base sm:text-lg ";
   const inactiveClass = "text-gray-500";
   const activeClass = "text-blue-500 font-semibold";
 
@@ -25,7 +25,7 @@ export default function Header() {
               <Wallet className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-gray-900 text-2xl">10012</h1>
+              <h1 className="text-gray-900 text-2xl sm:block hidden">10012</h1>
             </div>
           </Link>
 
