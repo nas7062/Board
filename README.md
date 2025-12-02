@@ -74,8 +74,9 @@ import {CardTitle,
 ### 스타일
 - Tailwind CSS 클래스 사용
 - shadcn/ui 컴포넌트 활용
-- 본 프로젝트는 Shadcn UI 템플릿을 기반으로 구축되었습니다.
-테이블 및 카드 스타일은 템플릿을 활용하였으며 layout에 필요한 부분은 tailwind Css로 변경 하였습니다.
+- 본 프로젝트는 **shadcn/ui 템플릿을 기반으로 개발**되었습니다.  
+테이블 및 카드와 같은 핵심 UI 컴포넌트는 템플릿 스타일을 활용하였으며,  
+레이아웃 및 필요한 인터페이스 요소는 프로젝트 요구에 맞게 Tailwind CSS로 커스터마이징했습니다.
 
 
 ## 🛠 기술 스택
@@ -90,8 +91,7 @@ import {CardTitle,
 - **Lucide React** - 아이콘 라이브러리
 
 ### 데이터 시각화
-- **Recharts** – 대시보드용 차트/그래프 구현을 위한 React 차트 라이브러리
-- 
+- **Recharts** – 대시보드용 차트/그래프 구현을 위한 React 차트 라이브러리 
 ### 데이터 처리
 - **@tanstack/react-query** – 서버 상태 관리 및 비동기 데이터 fetching/캐싱
 - **@tanstack/react-query-devtools** – React Query 상태 디버깅 및 개발자 도구
