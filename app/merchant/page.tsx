@@ -225,7 +225,7 @@ export default function MerchantPage() {
                           {MERCHANT_STATUS_LABELS[merchant.bizType]}
                         </TableCell>
                         <TableCell>
-                          <div
+                          <Badge
                             className={clsx(
                               STATUS_LABLES[merchant.status] === "활성" &&
                                 "text-green-500",
@@ -237,7 +237,7 @@ export default function MerchantPage() {
                             )}
                           >
                             {STATUS_LABLES[merchant.status]}
-                          </div>
+                          </Badge>
                         </TableCell>
                         <TableCell className="text-right text-gray-900 sm:block hidden">
                           {merchant.updatedAt.split("T")[0]}
