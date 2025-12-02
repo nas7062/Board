@@ -24,9 +24,6 @@ export default function Header() {
             <Link href="/merchant" className=" text-gray-900">
               가맹점
             </Link>
-            <Link href="/" className=" text-gray-900">
-              정산
-            </Link>
           </nav>
         </div>
       </div>

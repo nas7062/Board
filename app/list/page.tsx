@@ -72,7 +72,7 @@ export default function ListPage() {
           <div className="relative w-full ">
             <Search className="absolute left-1 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
             <input
-              placeholder="거래ID, 가맹점명, 고객명 검색..."
+              placeholder="가맹점명 검색 "
               value={searchTerm}
               onChange={(e) => {
                 setSearchTerm(e.target.value);
