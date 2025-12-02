@@ -5,7 +5,6 @@ import PayTypeChart from "./_components/PayTypeChart";
 import WeekCountChart from "./_components/WeekCountChart";
 import WeekPriceChart from "./_components/WeekPriceChart";
 import { Ipayment } from "./util/type";
-
 import _ from "lodash";
 import { DollarSign, CreditCard, ShoppingCart, Percent } from "lucide-react";
 import { formatCurrency, PAYMENT_METHOD_LABELS } from "./util/constant";
