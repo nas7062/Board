@@ -21,9 +21,10 @@ import {
 import { Ipayment } from "../util/type";
 import { formatCurrency } from "../util/constant";
 export default function WeekPriceChart({ payments }: { payments: Ipayment[] }) {
+  if (!payments) return;
   const grouped = _.groupBy(
     payments,
-    (p: Ipayment) => p.paymentAt.split("T")[0]
+    (p: Ipayment) => p.paymentAt?.split("T")[0]
   );
 
   const chartData = Object.keys(grouped).map((date) => ({

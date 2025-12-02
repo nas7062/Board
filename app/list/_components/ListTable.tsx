@@ -23,6 +23,7 @@ export default function ListTable({
   payments: Ipayment[];
   filteredPayments: Ipayment[];
 }) {
+  if (!payments) return;
   return (
     <div className="border rounded-lg overflow-hidden">
       <Table>
@@ -97,7 +98,7 @@ export default function ListTable({
                   </Badge>
                 </TableCell>
                 <TableCell className="text-sm text-gray-600 sm:block hidden">
-                  {payments.paymentAt.split("T")[0]}
+                  {payments.paymentAt?.split("T")[0]}
                 </TableCell>
               </TableRow>
             ))

@@ -49,7 +49,7 @@ export default function MerchantTable({
               <TableRow
                 key={merchant.mchtCode}
                 className={`hover:bg-gray-50 cursor-pointer  ${
-                  selectedMerchant === merchant.mchtCode ? "bg-blue-50" : ""
+                  selectedMerchant === merchant.bizNo ? "bg-blue-100" : ""
                 }`}
                 onClick={() => setSelectedMerchant(merchant.bizNo)}
               >

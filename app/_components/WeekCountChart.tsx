@@ -26,7 +26,7 @@ export default function WeekCountChart({ payments }: { payments: Ipayment[] }) {
 
     const grouped = _.groupBy(
       payments,
-      (p: Ipayment) => p.paymentAt.split("T")[0]
+      (p: Ipayment) => p.paymentAt?.split("T")[0]
     );
 
     return Object.keys(grouped).map((date) => ({

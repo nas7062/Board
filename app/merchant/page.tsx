@@ -9,26 +9,29 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useEffect, useMemo, useState } from "react";
-import getMerchantDetail from "../_lib/getMerchantDetail";
+import { useMemo, useState } from "react";
 import { ImerchantsDetail } from "../util/type";
 import { MERCHANT_STATUS_LABELS } from "../util/constant";
 import _ from "lodash";
 import MerchantFilter from "./_components/MerchantFilter";
 import MerchantTable from "./_components/MerchantTable";
 import MerchantDetail from "./_components/MerchantDetail";
+import { useMerchantDetail } from "../hook/useMerchantDetail";
 export default function MerchantPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [bizTypeFilter, setBizTypeFilter] = useState<string>("all");
   const [selectedMerchant, setSelectedMerchant] = useState<string>("");
-  const [merchants, setMerchants] = useState<ImerchantsDetail[]>([]);
+  const { data, isLoading, isError, error } = useMerchantDetail();
+
+  const merchants = data?.data ?? [];
   const filteredMerchants = useMemo(() => {
+    if (!merchants) return;
     return merchants.filter((merchant) => {
       const matchesSearch =
-        merchant.mchtName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        merchant.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        MERCHANT_STATUS_LABELS[merchant.bizType].includes(searchTerm);
+        merchant.mchtName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        merchant.address?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        MERCHANT_STATUS_LABELS[merchant.bizType]?.includes(searchTerm);
       const matchesStatus =
         statusFilter === "all" || merchant.status === statusFilter;
       const matchesBizType =
@@ -38,16 +41,6 @@ export default function MerchantPage() {
     });
   }, [merchants, searchTerm, statusFilter, bizTypeFilter]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getMerchantDetail();
-      if (data.status !== 200) {
-        console.log("패치 실패");
-      }
-      setMerchants(data.data);
-    };
-    fetchData();
-  }, []);
   const selectedMerchantData = selectedMerchant
     ? merchants.find((m) => m.bizNo === selectedMerchant)
     : null;
@@ -78,6 +71,10 @@ export default function MerchantPage() {
       count: result.count,
     };
   }, [merchants]);
+
+  if (isLoading) return <div>불러오는 중...</div>;
+  if (isError) return <div>에러: {(error as Error).message}</div>;
+  if (!filteredMerchants || !merchants || !mostBizType) return;
   return (
     <div className="space-y-6 flex flex-col">
       <div className="flex flex-col gap-2 text-center">
@@ -100,7 +97,7 @@ export default function MerchantPage() {
         <BoardCard
           title="최대 업종"
           Icon={Store}
-          value={mostBizType?.label as string}
+          value={mostBizType.label}
           descript={`전체 ${mostBizType?.count}%`}
         />
       </div>
