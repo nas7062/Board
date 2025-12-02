@@ -97,3 +97,10 @@ export const STATUS_COLORS = {
   INACTIVE: "#b6cc3a",
   CLOSED: "#8317e9",
 };
+
+{
+  /*api 주소*/
+}
+
+export const PAYMENT_LIST = "/payments/list";
+export const MERCHANT_DETAIL = "/merchants/details";

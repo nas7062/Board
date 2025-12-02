@@ -1,4 +1,4 @@
-import { BASE_URL } from "../util/constant";
+import { BASE_URL, MERCHANT_DETAIL } from "../util/constant";
 import { ImerchantsDetail } from "../util/type";
 
 export type merchantDetailResponse = {
@@ -8,7 +8,7 @@ export type merchantDetailResponse = {
 };
 
 export default async function getMerchantDetail(): Promise<merchantDetailResponse> {
-  const res = await fetch(`${BASE_URL}/merchants/details`, {
+  const res = await fetch(`${BASE_URL}${MERCHANT_DETAIL}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

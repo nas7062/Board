@@ -1,4 +1,4 @@
-import { BASE_URL } from "../util/constant";
+import { BASE_URL, PAYMENT_LIST } from "../util/constant";
 import { Ipayment } from "../util/type";
 export type PaymentListResponse = {
   status: number;
@@ -7,7 +7,7 @@ export type PaymentListResponse = {
 };
 
 export default async function getAllPaymentList(): Promise<PaymentListResponse> {
-  const res = await fetch(`${BASE_URL}/payments/list`, {
+  const res = await fetch(`${BASE_URL}${PAYMENT_LIST}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
