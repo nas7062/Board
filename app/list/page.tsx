@@ -5,6 +5,7 @@ import { usePaymentList } from "../hook/usePaymentList";
 import ListFilter from "./_components/ListFilter";
 import ListTable from "./_components/ListTable";
 import { MERCHANT_NAME_MAP } from "../util/constant";
+import PageNation from "./_components/PageNation";
 export default function ListPage() {
   const { data, isLoading, isError, error } = usePaymentList();
 
@@ -12,7 +13,8 @@ export default function ListPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [paymentMethodFilter, setPaymentMethodFilter] = useState<string>("all");
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 20;
   const filteredPayments = useMemo(() => {
     return payments.filter((transaction) => {
       const name = MERCHANT_NAME_MAP[transaction.mchtCode];
@@ -29,6 +31,13 @@ export default function ListPage() {
       return matchesSearch && matchesStatus && matchesPaymentMethod;
     });
   }, [payments, searchTerm, statusFilter, paymentMethodFilter]);
+
+  const paginatedPayments = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    return filteredPayments.slice(startIndex, startIndex + itemsPerPage);
+  }, [filteredPayments, currentPage]);
+
+  const totalPages = Math.ceil(filteredPayments.length / itemsPerPage);
 
   if (isLoading) return <div>불러오는 중...</div>;
   if (isError) return <div>에러: {(error as Error).message}</div>;
@@ -53,7 +62,14 @@ export default function ListPage() {
         <h3 className="text-xl font-semibold">
           총 {filteredPayments.length}건의 거래 내역
         </h3>
-        <ListTable payments={payments} filteredPayments={filteredPayments} />
+        <ListTable payments={payments} paginatedPayments={paginatedPayments} />
+        {totalPages > 1 && (
+          <PageNation
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            totalPages={totalPages}
+          />
+        )}
       </div>
     </div>
   );

@@ -18,10 +18,10 @@ import { Badge } from "@/components/ui/badge";
 
 export default function ListTable({
   payments,
-  filteredPayments,
+  paginatedPayments,
 }: {
   payments: Ipayment[];
-  filteredPayments: Ipayment[];
+  paginatedPayments: Ipayment[];
 }) {
   if (!payments) return;
   return (
@@ -45,7 +45,7 @@ export default function ListTable({
               </TableCell>
             </TableRow>
           ) : (
-            filteredPayments.map((payments) => (
+            paginatedPayments.map((payments) => (
               <TableRow
                 key={payments.paymentCode}
                 className="hover:bg-gray-50  "
